@@ -26,10 +26,10 @@ class Escape(Widget):
     enemy = ObjectProperty(None)
 
     def start(self):
-        enx = int(math.ceil(1000 * random.random()))
-        eny = int(math.ceil(1000 * random.random()))
+        enx = int(math.ceil(500 * random.random()))
+        eny = int(math.ceil(500 * random.random()))
         print enx, eny
-        self.player1.center = (50, 800)
+        self.player1.center = (50, 300)
         self.enemy.center = (enx, eny)
         print self.enemy.center
         print self.player1.center
