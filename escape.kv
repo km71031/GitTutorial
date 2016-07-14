@@ -1,0 +1,42 @@
+#kivy 1.9.1
+<Player1>:
+    size: 10, 10
+    canvas:
+        Rectangle:
+            pos:self.pos
+            size:self.size
+
+<Escape>:
+    player1: zzplayer1
+    enemy: poison
+
+    #canvas:
+     #   Rectangle:
+      #      pos: self.center_x-5, 0
+       #     size: 10, self.height
+
+    Label:
+        font_size: 20
+        center_x: root.width / 4
+        top: root.top - 50
+        text: str(root.player1.LP)
+
+    Label:
+        font_size: 20
+        center_x: root.width * 3 / 4
+        top: root.top - 50
+        text: str(root.player1.time)
+
+    Player1:
+        id: zzplayer1
+        center: self.center
+        #x: root.x
+        #center_y: root.center_y
+
+    Player1:
+        id: poison
+        #x: root.width-self.width
+        center: self.center
+
+
+
