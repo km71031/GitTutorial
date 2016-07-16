@@ -14,7 +14,7 @@
             size:self.size
 
 <Hammer>:
-    size: 30, 30
+    size: 100, 100
 
     canvas:
         Color:
@@ -26,7 +26,7 @@
 
 
 <MoleGame>:
-    mole: zzplayer1
+    mole: mmmole
     hammer: weapon
 
     #canvas:
@@ -38,16 +38,16 @@
         font_size: 20
         center_x: root.width / 4
         top: root.top - 50
-        text: str(root.mole.score)
+        text: str(root.score)
 
     Label:
         font_size: 20
         center_x: root.width * 3 / 4
         top: root.top - 50
-        text: str(root.mole.time)
+        text: str(root.time)
 
     Mole:
-        id: zzplayer1
+        id: mmmole
         center: self.center
         #x: root.x
         #center_y: root.center_y
