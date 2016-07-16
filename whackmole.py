@@ -29,11 +29,10 @@ class Mole(Widget):
     #def boxattack(self, en):
      #  if self.collide_widget(en):
 
-    def whack(self, wp):
+    def whack(self, mole):
+        pass
 
-
-
-        """
+    """
             if self.x < enemy.x:
                 enemy.x += 20
             else:
@@ -42,7 +41,11 @@ class Mole(Widget):
             if self.y < enemy.y:
                 enemy.y += 20
             else:
-                enemy.y -= 20  #"""
+                enemy.y -= 20  #
+    """
+class Hammer(Mole):
+    def test2(self):
+        print "test2"
 
 """def func(**kwargs):
 
@@ -51,13 +54,20 @@ class Mole(Widget):
 
 func(a=1,b=2)"""
 
-class Escape(Widget):
+class MoleGame(Widget):
     mole = ObjectProperty(None)
-    #mole = Mole()
+    hammer = ObjectProperty(None)
+    mole = Mole()
+    hammer = Hammer()
     def start(self):
+        #self.mole = Mole()
+        #self.hammer =Hammer()
         wpx = int(math.ceil(500 * random.random()))
         wpy = int(math.ceil(500 * random.random()))
-        self.mole.center = [100, 300]
+        self.mole.center = [int(100), int(300)]
+        self.hammer.center= [450, 250]
+        print self.mole.center
+        print self.hammer.center
 
 
 
@@ -86,7 +96,7 @@ class Escape(Widget):
        # for en in self.enemy:
         #    self.p1.pcrush(en)
         #self.mole.on_touch_move
-        self.mole.whack(self)
+        #self.mole.whack(self)
 
         if self.mole.time:
             self.mole.time -= 1
@@ -101,16 +111,16 @@ class Escape(Widget):
 
 class WhackmoleApp(App):
     def build(self):
-         game = Escape()
+         game = MoleGame()
          game.start()
          Clock.schedule_interval(game.update, 1.0)
+         #print game.hammer.center
          return game
 
 
 
 if __name__ == "__main__":
     WhackmoleApp().run()
-
 
 
 
