@@ -27,8 +27,8 @@ from kivy.graphics import Ellipse
 
 
 class Trash(Widget):
-    velocityX = 4
-    velocityY = 4
+    velocityX = 0
+    velocityY = 0
     def bounce(self, box):
         if self.collide_widget(box):
             self.velocityX *= -1
@@ -50,17 +50,42 @@ class Throw(Widget):
     hako2 = ObjectProperty(TrashCan)
     hako3 = ObjectProperty(TrashCan3)
     def start(self):
+        self.finishshooting = 0
+        self.ready = 0
         self.gomi.center = [150, 100]
         hakopos = [500, 200]
         self.hako1.pos = hakopos
         self.hako2.pos = hakopos
         self.hako2.x += self.hako3.hakowidth
         self.hako3.pos = hakopos
-
+    def on_touch_down(self, touch):
+        print touch.pos
+        self.touchDx = touch.x
+        self.touchDy = touch.y
+        #print self.touchD[1]
+    def on_touch_up(self, touch):
+        print touch.pos
+        self.touchUx = touch.x
+        self.touchUy = touch.y
+        self.ready = 2
 
     def update(self, dt):
-        #print "==============================="
-        #print self.gomi.x
+        #while self.finishshooting < 1:
+        if self.ready > 1:
+            print self.touchDx
+            dx = self.touchDx - self.touchUx
+            dy = self.touchDy - self.touchUy
+            tan = dy / dx
+            cos = math.sqrt(1 / (1 + tan ** 2))
+            if dx < 0:
+                cos *= -1
+            sin = tan * cos
+            elongation_2 = dx ** 2 + dy **2
+            self.gomi.velocityX += math.sqrt(elongation_2) * cos
+            self.gomi.velocityY += math.sqrt(elongation_2) * sin
+            self.finishshooting = 2
+        else:
+            pass
         self.gomi.x += self.gomi.velocityX
         self.gomi.y += self.gomi.velocityY
         if self.gomi.x + self.gomi.width > self.width\
@@ -69,11 +94,12 @@ class Throw(Widget):
         if self.gomi.top > self.height\
         or self.gomi.y < self.y:
             self.gomi.velocityY *= -1
-
-        self.gomi.fall()
         self.gomi.bounce(self.hako1)
         self.gomi.bounce(self.hako2)
         self.gomi.bounce3(self.hako3)
+
+        if self.finishshooting:
+            self.gomi.fall()
         #if self.gomi.collide_widget(self.hako):
          #   self.gomi.velocity *= -1
     #def on_touch_move(self, touch):
@@ -89,6 +115,7 @@ class Throw_trashApp(App):
             Color(0, .5, 1)
             Ellipse(pos=(150, 150), size=(120, 120))"""
         game.start()
+        game.shoot()
         Clock.schedule_interval(game.update, 1.0 /30.0)
         return game
 
